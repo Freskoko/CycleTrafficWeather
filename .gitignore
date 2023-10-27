@@ -1,0 +1,12 @@
+app/raw_data
+/app/raw_data
+
+src/raw_data
+/src/raw_data
+
+app/model.pkl
+app/pickle_knn.pkl
+/app/model.pkl
+/app/pickle_knn.pkl
+
+

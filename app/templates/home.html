@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyclists Over Nygårdsbroen!</title>
+    <style>
+        div {
+        font-family: Arial, sans-serif; 
+        
+        }
+        form div {
+            margin-bottom: 10px;
+            margin-right: 100px;
+        }
+        #cycle_art {
+        position: absolute;
+        right: 40%;
+        top: 30%;
+        }
+
+        #cycle_amount{
+            position: absolute;
+            right: 45%;
+            top: 20%;
+
+        }
+
+        #flashes{
+            position: absolute;
+            right: 25%;
+            top: 30%;
+        }
+    </style>
+</head>
+<body>
+
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes id="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <h1>Cyclists Over Nygårdsbroen</h1>
+
+    {% if traffic_data %}
+    <h2 id="cycle_amount" >Cyclists for input: {{ traffic_data }}       </h2>
+    {% endif %}
+
+    {% if cycle_art %}
+    <pre id="cycle_art">{{ cycle_art }}</pre>
+    {% endif %}
+
+
+    <form method="POST">
+        <div>
+            <h3> Welcome to this website which allows one to predict the number of cyclists given weather data </h3>
+
+            <h3> Please enter in data points below. All data points except "Date" are optional! </h3>
+        </div>
+
+        <div>
+            <!-- REFRENCE : https://www.asciiart.eu/sports-and-outdoors/cycling -->
+            <pre>
+                $"   *.      
+                d$$$$$$$P"                  $    J
+                    ^$.                     4r  "
+                    d"b                    .db
+                   P   $                  e" $
+          ..ec.. ."     *.              zP   $.zec..
+      .^        3*b.     *.           .P" .@"4F      "4
+    ."         d"  ^b.    *c        .$"  d"   $         %
+   /          P      $.    "c      d"   @     3r         3
+  4        .eE........$r===e$$$$eeP    J       *..        b
+  $       $$$$$       $   4$$$$$$$     F       d$$$.      4
+  $       $$$$$       $   4$$$$$$$     L       *$$$"      4
+  4         "      ""3P ===$$$$$$"     3                  P
+   *                 $       """        b                J
+    ".             .P                    %.             @
+      %.         z*"                      ^%.        .r"
+         "*==*""                             ^"*==*""   
+            </pre>
+
+        </div>
+
+        <input type="submit" value="Predict!">
+
+
+
+        <div>
+            <label for="date">Date: format (YYYY-MM-DD HH):</label>
+            <input type="text" id="date" name="DateFormatted" required>
+            <div>
+                <i>Example date: 2023-01-01 08:00:00</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="solarRadiation">Global Radiation:</label>
+            <input type="text" id="solarRadiation" name="Globalstraling">
+            <div>
+                <i>Suggested range = -3 to 1000</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="sunshineDuration">Sunshine Duration:</label>
+            <input type="text" id="sunshineDuration" name="Solskinstid">
+            <div>
+                <i>Suggested range = 0 to 10</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="airTemp">Air Temperature:</label>
+            <input type="text" id="airTemp" name="Lufttemperatur">
+            <div>
+                <i>Suggested range = -20 to 50</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="windDirection">Wind Direction:</label>
+            <input type="text" id="windDirection" name="Vindretning" >
+            <div>
+                <i>Suggested range = 0 to 360</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="windSpeed">Wind Speed:</label>
+            <input type="text" id="windSpeed" name="Vindstyrke" >
+            <div>
+                <i>Suggested range = 0 to 1000</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="airPressure">Air Pressure:</label>
+            <input type="text" id="airPressure" name="Lufttrykk" >
+            <div>
+                <i>Suggested range = 0 to 1050</i>
+            </div>
+        </div>
+        
+        <div>
+            <label for="windGusts">Wind Gusts:</label>
+            <input type="text" id="windGusts" name="Vindkast" >
+            <div>
+                <i>Suggested range = 0 to 65</i>
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Draw an image of nygårsboren and put cyclists on it equal to traffic that day -->
+    {% if traffic_image %}
+    <img src="{{ url_for('static', filename='cyclist_image.png') }}" alt="nygardsbroen">
+    {% endif %}
+</body>
+</html>
