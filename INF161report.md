@@ -24,7 +24,7 @@
 
 *Henrik Brøgger*
 
-This report pertains to the INF161 project this fall, in creating a model which can guess bike traffic across nygårdsbroen.
+This report pertains to the INF161 project for the fall of 2023 for creating a model which can guess bike traffic across Nygårdsbroen.
 
 ### Index:
 
@@ -34,14 +34,14 @@ This report pertains to the INF161 project this fall, in creating a model which 
 - Dropped columns
 - Feature engineering
 - Results
-- discussion
+- Discussion
 - Improvements
 - Website
 - Conclusion
 
 ## Approach and design choices
 
-Given multiple files describing weather, and a single file describing traffic, there were hurdles to get over, and choices to make in order to create a DataFrame which an eventual model could learn from. This was all in order to create a website to allow users to predict cycle traffic over nygårdsbroen, given the weather conditions.
+Given multiple files describing weather, and a single file describing traffic, there were hurdles to get over, and choices to make in order to create a DataFrame which an eventual model could learn from. This was all in order to create a website to allow users to predict cycle traffic over Nygårdsbroen, given the weather conditions.
 
 ### Issues/Choices
 
@@ -51,8 +51,9 @@ Simply opening the traffic data in a nice format was a challenge. The trafficdat
 
 *Difference in data spacing*
 
-The weather data has 6 data points per hour, (for every 10 minutes), however the traffic data only has 1 data point per hour. The solution to this misalignment was taking the mean of the 6 values makign up an hour in the weather data. 
-The end goal is to predict weather for a given hour, and so converting the traffic per hour for minutes by dividing by 6 would not be favourable, as now the model would guess for each 10 minutes in an hour. Taking the mean of values is an area where quite a lot of data may be lost through "compression".
+The weather data has 6 data points per hour, (for every 10 minutes), however the traffic data only has 1 data point per hour. The solution to this misalignment was taking the mean of the 6 values makign up an hour in the weather data.
+
+The end goal is to predict weather for a given hour, and so converting the traffic per hour for minutes by dividing by 6 would not be favourable. If we were to do so, now the model would guess for each 10 minutes in an hour. Taking the mean of values is an area where quite a lot of data may be lost through "compression".
 
 *Time frame differences*
 
@@ -74,10 +75,12 @@ In figs, there are images presenting each of the coloums in the final data frame
 # Variations within time
 
 ![year](figs/monthly_traffic.png)
+*Note: Graph above shows average hourly traffic per month*
 
 Certain months have different amounts of mean traffic, so providing the model the month will help it understand this correlation. I am using dummies from python in order to setup a coloumn for each month. 
 
 ![week1](figs/weekly_traffic.png)
+*Note: Graph above shows average hourly traffic per day of the week*
 
 Certain days have different amounts of mean traffic, so providing the model the day will help it understand this correlation. I am using dummies from python in order to setup a coloumn for each day. 
 
@@ -165,6 +168,8 @@ Description POST PROCESSING
 
 Data is staistically analysed using spearmann and pearson correlation.
 
+#TODO NOTE ABOUT PRE AND POST PROCESSING
+
 ### Globalstråling
 
 **Raw-observation**
@@ -185,7 +190,7 @@ It is clear that there is some correlation between globalstråling and cycle-tra
 
 There seems to be little difference in correlation when globalstråling lies between 0-400, but in values over this, and especially over 600, traffic decreases. 
 
-With a pearson corr value of *0.2985*, this is decently strong, but can still be a good indicator of correlation.
+With a pearson correlation of *0.2985*, this is decently strong, but can still be a good indicator of correlation.
 
 The spearmann correlation value of *0.4716* is a good sign. Due to the nature of the data "jumping"  up and down, (meaning that that for one given globalstråling `n`, it can have values a 300, while `n+1` has 150, and `n+2` has 300 again). The spearmann value may not be as useful here, as it is most useful when observing monotonic data.
 
@@ -266,7 +271,7 @@ Looking at the figure above , it is clear that the data contains outliers, and t
 ![Vindretning vs traffik](figs/VindretningVSTotal_trafikk_POST_CHANGES.png)
 
 Looking at the *Vindretning vs Total_trafikk*  graph above, it is up for argument if there is a strong correlation between the two, but there is some data that can be useful.
-It seems that between x=100-350 values are pretty much consistent, however a drop is seen at around 250. Values between 100-0 are also very very low, and could be reflective of something else? Vindretning and traffic seem to be correlated, but these vindretning values can be further processed, to try to extract further data from the wind.  
+It seems that between x=100-350 values are pretty much consistent, however a drop is seen at around 250. Values between 100-0 are also very low, and could be reflective of something else? Vindretning and traffic seem to be correlated, but these vindretning values can be further processed, to try to extract further data from the wind.  
 
 ![vindretning vs traffik](figs/Vindretning_xVSTotal_trafikk_POST_CHANGES.png)
 
@@ -275,7 +280,7 @@ It seems that between x=100-350 values are pretty much consistent, however a dro
 This data has been transformed quite a bit. Vindretning was originally a number between 0-360, and has transformed to two values. The degrees (0-360) can be imagined as points on a unit circle. 
 Converting this point to two sperate values, x and y reveal more about the nature of the wind. Originally only the wind direction was known, but now the wind x and y directions are known, or atleast simulated.
 
-Mathematically speaking:
+Mathematically speaking: TODO FIX THIS
 ```
     df["Vindretning_radians"] = np.radians(df["Vindretning"])
     df["Vindretning_x"] = np.cos(df["Vindretning_radians"])
@@ -328,7 +333,7 @@ The *Vindkast* and *Vindstyrke* variables have a pearson correlation of 0.979, f
 
 *Vindstyrke* has a correlation of 0.0321 with *Total trafikk*, 
 while *Vindkast* has a correlation 0.0325 with *Total trafikk*.
-*Vindstyrke* has a pearson correlation which is 0.004 less than *Vindstyrke*, this is almost nothing, but for the purpouses of this paper, i choose to keep *Vindkast*. It is also important to note that when two variables are so similar and correlate so well, it is like giving the model the same data two times, which can lead to unwanted effects, like the model over-weighting these two factors or otherwise underrelying on one, and overrelying on the other. When they tell the same story, there is no need to keep them both.
+*Vindstyrke* has a pearson correlation which is 0.004 less than *Vindstyrke*, this is almost nothing, but for the purpouses of this paper, i choose to keep *Vindkast*. It is also important to note that when two variables are so similar and correlate so well, it is like giving the model the same data two times, which can lead to unwanted effects, like the model over-weighting these two factors or otherwise underrelying on one, and overrelying on the other. When they tell the same story, there is no need to keep them both. 
 
 -----------
 
@@ -393,6 +398,8 @@ This section goes over the treatment of outliers, and other processing steps.
 Values that were deemed as outliers such as "99999" were transformed into NaN.
 Follwing this step, these NaN were transformed into real values by a KNNImputer, with settings *weights* = distance, since this pertains to date data. When mentioning that "x" data points were transformed to NaN, this includes the 99999 data points as well as those outside the borders specified in each section.
 
+TODO: TRANSFORM THIS INTO GRAPH
+TODO: CHNAGE NAN VALUES
 ```
 Number of NaNs in each column: (training data)
 Globalstraling              85
@@ -404,7 +411,6 @@ Lufttrykk                  169
 Vindkast                   169
 Relativ luftfuktighet    45746
 ```
-
 
 - *Globalstråling*
 
@@ -603,8 +609,8 @@ Range: N/A
 
 ### Considered Features that were decided against 
 
-- *Total traffic in retning danmarkplass*,
-- *Total traffic in retning florida*,
+- *Total traffic in retning Danmarkplass*,
+- *Total traffic in retning Florida*,
 
 <p> The reason adding this coloumn doesnt work is, well, if we know how much traffic there is, there is no point in guessing how much traffic there is.
 </p>
@@ -613,8 +619,8 @@ Range: N/A
 
 -----------------------------------
 
-- *Last_Total traffic in retning florida*,
-- *Last_Total traffic in retning danmarksplass*,
+- *Last_Total traffic in retning Florida*,
+- *Last_Total traffic in retning Danmarksplass*,
 - *Last_Total traffic*,
 
 <p> This coloumn would be the value for traffic in the previous row.
@@ -675,15 +681,18 @@ This model does not perform so well since there is no clear "cut" between if the
 3. DecisionTreeRegressor: *Tree based prediction*
 DecisionTreeRegressor RMSE:26.725
 
-This model is not doing half bad when compared to RandomForestRegressor but it may be overfitting to the trainig data, creating many specific "rules", which are not valid anymore for unseen data.
+This model is not doing half bad when compared to RandomForestRegressor, but it may be overfitting to the trainig data, creating many specific "rules", which are not valid anymore for unseen data.
 
 
 4. GradientBoostingRegressor: *Ensamble boosting model*
 GradientBoostingRegressor RMSE:27.312
 
-This model is not doing half bad when compared to RandomForestRegressor
+#TODO CHANGE THIS FORMULATION
+
+This model is not doing half bad when compared to RandomForestRegressor.
 This model works buy building trees one at a time, where each new tree helps to correct the mistakes made by the previously trained tree. 
 This model may struggle since the data has a large variance in traffic, for example when looking at max and min cyclists for a given hour. 
+
 
 5. RandomForestRegressor: *Ensamble model*
 RandomForestRegressor RMSE:22.723
@@ -752,6 +761,7 @@ After this change, the RMSE increased by about 0.3, proving that adding dummy va
 It is also interesting to note that the same 5 variables stay the most important, but the month variables end up having vastly different importances.
 
 *Important variables*
+TODO: CHANGE TO TABLE
 ``` 
            Feature  Importance
 29       rush_hour    0.320274
@@ -817,7 +827,7 @@ RMSE: 23.263562241252878
 
 The model got worse, by about  a 0.5 increase in RMSE!
 
-But looking at the importances, nothing changed! This made me run my base model again, since that is quite interesting that the model is worse but none of the feature importances changed.
+But looking at the importances, nothing changed! This made me run my base model again, since that is quite interesting that the model is worse but none of the feature importances changed. 
 
 I suspect data normalization may be a useful tool sometimes, but in this case it made the model worse, as maybe while data is transformed, it is also lost.  
 
@@ -844,7 +854,7 @@ This implies that, when n_neighbours is too high or too low, it results in missi
 
 ### Removing dummy variables for days
 
-So far, i have taken the dummy variables for days as a given, but what if they actually are making the model worse?
+So far, I have taken the dummy variables for days as a given, but what if they actually are making the model worse? 
 Instead, day will just be a coloumn with a number 0-6
 
 Model for test data = False
@@ -1012,12 +1022,12 @@ Looking at the predicted values for 2023, the model picks up on a few key things
 
 The model seems to get the general gist of what causes cyclist traffic to vary, but predicting the exact values is almost an impossible task. A good way to represent this is graphing the difference between the highest and lowest traffic value for each hour (on training data)
 
-![diff min/max traffic per hour](src/yearfigs/traffic_diff_perhour.png)
+![diff min/max traffic per hour](figs/traffic_diff_perhour.png)
 
 This exempliflies how much the traffic varies, and how daunting of a task it would be to guess exact values. 
 
-The amount of variables one could imagine could have an effect on traffic are almost endless. One could imagine a coloumn which was "% of votes for MDG" in the past voting year. This could have an effect on the amount of people cycling, as more people voting "green" could reflect an increasingly cycle-friendly culture. The point is, given the data, i am impressed that the model is this "close" to reality. 
- 
+The amount of variables one could imagine could have an effect on traffic are almost endless. One could imagine a coloumn which was "% of votes for MDG" in the past voting year. This could have an effect on the amount of people cycling, as more people voting "green" could reflect an increasingly cycle-friendly culture. The point is, given the data, I am impressed that the model is this "close" to reality. 
+
 The model is not exact, but this is due to the numbers never being "exact" in reality, and an RMSE of around 20 is very reasonable. 
 
 
