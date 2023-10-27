@@ -10,6 +10,7 @@
  - Open the folder "Project_Final_Henrik" in vscode
  - Click on the INF161project.py file
  - Run the python file
+ - (Running from terminal is not recommened, as paths may be wrong)
 
 **To run the website**
  - Open the folder "app" in vscode
@@ -17,6 +18,7 @@
  - Run the python file
  - Navigate in your browser to http://localhost:8080/
  - Wait if needed, as for your first run the model is being buildt from scratch
+ - (Running from terminal is not recommened, as paths may be wrong)
 
 ***If I'm not in PDF format, please open me in markdown formatting! (in vscode there is a button in the top right.)***
 
@@ -84,17 +86,19 @@ Certain days have different amounts of mean traffic, so providing the model the 
 
 Certain hours differ in traffic amounts, and this will be a key aspect of the model to understand.
 
-It is also important to note that within an hour, there is alot of variation between the highest and lowest amounts. This proves that the model have to rely on other factors than time to determine traffic amounts, but perhaps for periods betwene 0-4 at night, the model could understand that it should guess low, regardless of weather conditions.
+It is also important to note that within an hour, there is alot of variation between the highest and lowest amounts. This proves that the model have to rely on other factors than time to determine traffic amounts, but perhaps for periods between 0-4 at night, the model could understand that it should guess low, regardless of weather conditions.
 
 ### Yearly variations of traffic data / Correlation of the two directions
 
-![FloridaDanmarksplass vs time](figs/timeVStraffic_POST_CHANGES.png)
+![FloridaDanmarksplass vs time](figs/timeVStraffic_PRE_CHANGES.png)
 
 This graph visualizes traffic amounts over years, post processing
 
 
 This graph also visualizes a large cycling peak in 2017, due to a large bicycle competion happening that year. 
 This is the cause of a great deal of outliers. The solution to this is removing data which sits in the 99th percentile. The model does not need to be good at guessing when the next large scale bicycling competiton is, it is more about day to day cycling. 
+
+![FloridaDanmarksplass vs time](figs/timeVStraffic_POST_CHANGES.png)
 
 
 ### Correlation matrix
@@ -124,10 +128,42 @@ The variables which seem to have a good correlation with *Total_trafikk* are:
 
 - Vindretning_x/Vindretning_y (~ +/- **0.12~**)
 
+### Data description:
 
-Data is staistically analysed using spearmann and pearson correlation.
+
+
+
+
+
 
 -------------
+
+Description PRE PROCESSING
+
+| Statistics | Globalstraling | Solskinstid | Lufttemperatur | Vindretning | Vindstyrke | Lufttrykk | Vindkast | Relativ luftfuktighet | Total_trafikk |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **Count** | 45746.00 | 45746.00 | 45746.00 | 45746.00 | 45746.00 | 45746.00 | 45746.00 | 0.0 | 45746.00 |
+| **Mean** | 104.75 | 18.64 | 30.22 | 232.09 | 24.33 | 1023.43 | 26.23 | NaN | 51.48 |
+| **Std Dev** | 390.46 | 403.22 | 415.11 | 421.44 | 413.80 | 368.96 | 410.02 | NaN | 71.34 |
+| **Min** | -3.20 | 0.00 | -10.85 | 5.00 | 0.00 | 942.87 | 0.00 | NaN | 0.00 |
+| **25%** | -0.67 | 0.00 | 4.47 | 153.00 | 1.44 | 997.42 | 2.55 | NaN | 5.00 |
+| **Median/50%** | 4.47 | 0.00 | 8.58 | 168.17 | 2.62 | 1005.50 | 4.50 | NaN | 25.00 |
+| **75%** | 105.36 | 0.00 | 13.07 | 292.67 | 4.20 | 1012.97 | 7.15 | NaN | 65.00 |
+| **Max** | 9999.99 | 9999.99 | 9999.99 | 9999.99 | 9999.99 | 9999.99 | 9999.99 | NaN | 608.00 |
+
+#TODO WRITE HERE
+
+
+Description POST PROCESSING
+
+
+#TODO WRITE HERE
+
+
+
+-------------
+
+Data is staistically analysed using spearmann and pearson correlation.
 
 ### Globalstråling
 

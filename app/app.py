@@ -38,7 +38,7 @@ print(
 )
 
 app = Flask(__name__)
-app.secret_key = "A_in_INF161?_:P"
+app.secret_key = "Haper_rettingen_er_goy_:)"
 
 predictor = load_best_model()
 

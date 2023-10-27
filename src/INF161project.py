@@ -32,8 +32,8 @@ from utils.models import (
 # get current filepath to use when opening/saving files
 PWD = Path().absolute()
 DEBUG = False
-GRAPHING = True
-TRAIN_MANY = False
+GRAPHING = False
+TRAIN_MANY = True
 FINAL_RUN = False
 RANDOM_STATE = 2
 
@@ -78,6 +78,9 @@ def main():
 
     print("INFO : Average traffic per year (for training data):")
     print(average_traffic_per_year)
+
+    print("INFO : Description of data PRE PROCESSING")
+    print(training_df.describe())
 
     if GRAPHING:
         graph_all_models(training_df, pre_change=True)
@@ -155,6 +158,9 @@ def main():
     # save training data to csv to have a look
     training_df.to_csv(f"{PWD}/out/main_training_data.csv")
     print("INFO : Data saved to CSV")
+
+    print("INFO : Description of data POST PROCESSING")
+    print(training_df.describe())
 
     if GRAPHING:
         # Graph post data processing to visualize and analyze data
