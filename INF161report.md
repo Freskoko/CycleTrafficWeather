@@ -60,7 +60,7 @@ A choice that was made was also to completely remove the "Relativ luftfuktighet"
 
 *Test train split*
 
-In order to validate model efficacy, and check for over-training, a test-train-split process was used in order to observe model generalization. 70% of data was used as training data, while the remaining 30% was split into two parts of 15%, going to validation and test data.
+In order to validate model efficacy, and check for over-training, a test-train-split process was used in order to observe model generalization. 70% of data was used as training data, while the remaining 30% was split into two parts of 15%, going to validation and test data. When splitting data, it was not shuffled, as when working with timeseries data, as it helps the model understand time data better.  
 
 
 # Data exploration:
@@ -390,6 +390,8 @@ This section goes over the treatment of outliers, and other processing steps.
 
 Values that were deemed as outliers such as "99999" were transformed into NaN.
 Following this step, these NaN were transformed into real values by a KNNImputer, with settings *weights* = distance, since this pertains to date data. When mentioning that "x" data points were transformed to NaN, this includes the 99999 data points as well as those outside the borders specified in each section.
+The KNNImputer looks at the data in the dataset, and figures out the "best-fitting value" for the NaN value for a given coloumn. 
+
 
 | Column                | Number of NaNs |
 |-----------------------|----------------|
@@ -996,7 +998,11 @@ RMSE: 23.882
 | d_Saturday     | 0.0002     |
 | d_Sunday       | 0.0002     |
 
+
+
 ### Results discussion:
+
+**BEST MODEL**: 
 
 **The chosen best model was "RandomForestRegressor" with an *n_estimators* of 181 which has an RMSE of 22.7217 on validation data and 23.8822 on test data**
 
@@ -1024,6 +1030,8 @@ The amount of variables one could imagine could have an effect on traffic are al
 
 The model is not exact, but this is due to the numbers never being "exact" in reality, and an RMSE of around 20 is very reasonable.
 
+It is important to note that the test RMSE was baout 1.1 higher than the validation RMSE. This means that the model may have overfitted slightly to the training/validation data. However, this increase is very minimal and still shows the model is able to generalize.
+
 
 ----------------------------
 
@@ -1050,10 +1058,16 @@ After consulting with the professor, it was found out that when using RandomFore
 The idea of the website was easy, but implementing its key features proved a challenge. Allowing a user to input all data, led to having to "build" their input as a dataframe before passing it to the predictor.
 The predictor takes some time to build, so the library `pickle` was used to save the model after its creation. The model is too large to upload to git, let alone any other service, so for first time use, there may be a little bit of waiting time as the model is created.
 The website allows all fields to not have values, except the date. The date is something that  is hard to be predicted by a KNNimputer. It is possible, but requires data represented in a different format, rather than the datetime format this project uses. Imagine being given weather and being asked "what day is this". This would be a fun task, but is perhaps out of the scope of this project.
+The KNNimputer (for the training data) was saved as a pickle file, so that the webiste needs to predict missing values from the user, it refers to this imputer. The KNNImputer looks at the data in the dataset, and figures out the "best-fitting value" for the NaN value for a given coloumn. 
 
 ### Predictions.csv
 
 For the prediction files, the values for the "Prediksjon" column was changed to be ints. For the whole prediction process, the model works with floating point numbers, however for the final predictions, they were rounded up to ints. This is because there is never a case where 3 and a half cyclists cycle over the bridge.
+
+### Real world implications:
+
+While this model works for nygårdsbroen, i would imagine it would not generalize well to other bridges or cycle traffic areas. This is because the amount of cycle traffic varies os greatly. For example looking at a bridge further out towards Fana, oen would imagine that cycling peaks earlier and later since people going to work corss it earlier, and later since the people going home from work may cycle there later. Also the amount of cyclists in this bridge is very specific, and the numbers for other birdges will vary greatly. 
+
 
 ### Conclusion:
 
