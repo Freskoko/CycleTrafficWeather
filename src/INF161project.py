@@ -33,7 +33,7 @@ from utils.models import (
 PWD = Path().absolute()
 DEBUG = False
 GRAPHING = False
-TRAIN_MANY = True
+TRAIN_MANY = False
 FINAL_RUN = False
 RANDOM_STATE = 2
 
@@ -41,7 +41,7 @@ RANDOM_STATE = 2
 def main():
     print("INFO : Starting parsing ... ")
     # loop over files in local directory
-    directory = f"{str(PWD)}/src/raw_data"
+    directory = f"{str(PWD)}/raw_data"
 
     # multiple florida files will all be converted to df's, placed in this list, and concacted
     florida_df_list = []
