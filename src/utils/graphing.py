@@ -4,9 +4,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import plotly.express as px
 import seaborn as sns
-from loguru import logger
 from scipy.stats import spearmanr
 
 # get current filepath to use when opening/saving files
@@ -108,13 +106,11 @@ def graph_weekly_amounts(df: pd.DataFrame) -> None:
 
     avg_traffic_df = pd.DataFrame({"Day": days, "Average_Traffic": avg_traffic})
 
-    fig = px.bar(
-        avg_traffic_df,
-        x="Day",
-        y="Average_Traffic",
-        title="Average Traffic per Day of the Week",
-    )
-    fig.write_image(f"{PWD}/figs/weekly_traffic.png")
+    plt.bar(avg_traffic_df["Day"], avg_traffic_df["Average_Traffic"], color="blue")
+    plt.xlabel("Day")
+    plt.ylabel("Average Traffic")
+    plt.title("Average Traffic per Day of the Week")
+    plt.savefig(f"{PWD}/figs/weekly_traffic.png")
 
 
 def graph_monthly_amounts(df: pd.DataFrame):
@@ -139,13 +135,15 @@ def graph_monthly_amounts(df: pd.DataFrame):
         {"Month": months, "Average_Traffic": avg_traffic_monthly}
     )
 
-    fig = px.bar(
-        avg_traffic_monthly_df,
-        x="Month",
-        y="Average_Traffic",
-        title="Average Traffic per Month",
+    plt.bar(
+        avg_traffic_monthly_df["Month"],
+        avg_traffic_monthly_df["Average_Traffic"],
+        color="blue",
     )
-    fig.write_image(f"{PWD}/figs/monthly_traffic.png")
+    plt.xlabel("Month")
+    plt.ylabel("Average Traffic")
+    plt.title("Average Traffic per Month")
+    plt.savefig(f"{PWD}/figs/monthly_traffic.png")
 
 
 def graph_a_vs_b(

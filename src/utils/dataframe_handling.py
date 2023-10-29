@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from loguru import logger
 from matplotlib import pyplot as plt
 from sklearn.discriminant_analysis import StandardScaler
 from sklearn.ensemble import RandomForestRegressor

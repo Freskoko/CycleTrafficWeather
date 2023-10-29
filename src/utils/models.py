@@ -1,9 +1,9 @@
 from math import sqrt
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
-import plotly.express as px
-from loguru import logger
+from matplotlib import pyplot as plt
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import ElasticNet, Lasso
@@ -106,22 +106,13 @@ def train_models(split_dict: dict) -> None:
     # sorter etter mse
     data_models.sort_values(by="mse_values")
 
-    fig = px.bar(
-        data_models,
-        x="model_name",
-        y="mse_values",
-        title="MSE values for different models",
-        labels={"x": "Model", "y": "Mean Error"},
-        text=data_models["mse_values"].round(3),
-    )
-    fig.update_layout(
-        autosize=False,
-        width=1200,
-        height=1200,
-    )
-    fig.update_traces(textposition="auto")
-
-    fig.write_image(f"{PWD}/figs/MANYMODELS_MSE.png")
+    plt.figure(figsize=(10, 10))
+    plt.barh(data_models["model_name"], data_models["mse_values"], color="blue")
+    plt.xlabel("Mean Error")
+    plt.ylabel("Model")
+    plt.title("MSE values for different models")
+    plt.savefig(f"{PWD}/figs/MANYMODELS_MSE.png")
+    plt.show()
 
     print("MODELS : Done training a variety of models!")
 
@@ -173,7 +164,7 @@ def find_hyper_param(split_dict: dict) -> None:
     data_models = pd.DataFrame(
         {
             "model_name": model_strings,
-            "mse_values": [sqrt(i) for i in mse_values_models],
+            "mse_values": [np.sqrt(i) for i in mse_values_models],
         }
     )
 
@@ -182,18 +173,24 @@ def find_hyper_param(split_dict: dict) -> None:
 
     print(data_models)
 
-    fig = px.bar(
-        data_models,
-        x="model_name",
-        y="mse_values",
-        title="MSE values for RandomForestRegressor",
-        labels={"x": "Model", "y": "Mean Error"},
-        text=data_models["mse_values"].round(3),
-    )
+    plt.figure(figsize=(10, 8))
+    barplot = plt.bar(data_models.model_name, data_models.mse_values)
+    plt.title("MSE values for RandomForestRegressor")
+    plt.xlabel("Model")
+    plt.ylabel("Mean Error")
+    for idx, rect in enumerate(barplot):
+        height = rect.get_height()
+        plt.text(
+            rect.get_x() + rect.get_width() / 2.0,
+            1.01 * height,
+            round(data_models.mse_values.iloc[idx], 3),
+            ha="center",
+            va="bottom",
+            rotation=0,
+        )
 
-    fig.update_traces(textposition="auto")
-
-    fig.write_image(f"{PWD}/figs/MSE_hyperparam_models_V3.png")
+    plt.savefig(f"{PWD}/figs/MSE_hyperparam_models_V3.png")
+    plt.show()
 
     print("MODELS : Done training hyperparameter models!")
 
@@ -254,18 +251,16 @@ def find_hyper_param_further(split_dict: dict) -> None:
 
     print(data_models)
 
-    fig = px.bar(
-        data_models,
-        x="model_name",
-        y="mse_values",
-        title="MSE values for RandomForestRegressor",
-        labels={"x": "Model", "y": "Mean Error"},
-        text=data_models["mse_values"].round(3),
-    )
+    # Plotting with Matplotlib
+    plt.figure(figsize=(10, 6))
+    plt.bar(data_models["model_name"], data_models["mse_values"])
+    plt.title("MSE values for RandomForestRegressor")
+    plt.xlabel("Model")
+    plt.ylabel("Mean Error")
+    plt.xticks(rotation=90)
+    plt.tight_layout()
 
-    fig.update_traces(textposition="auto")
-
-    fig.write_image(f"{PWD}/figs/MSE_hyperparam_models_further.png")
+    plt.savefig(f"{PWD}/figs/MSE_hyperparam_models_further.png")
 
     print("MODELS : Done training hyperparameter models even further!")
 
