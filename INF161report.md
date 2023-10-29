@@ -1,18 +1,21 @@
 # Report for INF161 cycle traffic project
 
 **To run the model**
- - Open the folder "Project_Final_Henrik" in vscode
- - Click on the INF161project.py file
+ - Open the folder "Project_Final_Henrik" in vscode (dont just open the src file)
+ - Add the "raw_data" folder into the src folder
+ - Click on the src/INF161project.py file
  - Run the python file
  - (Running from terminal is not recommended, as paths may be wrong)
 
 **To run the website**
+ - Unzip the "app" folder
  - Open the folder "app" in vscode
+ - Add the raw data folder to the app folder. 
  - Click on the app.py file
  - Run the python file
- - Navigate in your browser to http://localhost:8080/
- - Wait if needed, as for your first run the model is being built from scratch
+  - Wait if needed, as for your first run the model is being built from scratch
  - (Running from terminal is not recommended, as paths may be wrong)
+ - Navigate in your browser to http://localhost:8080/
 
 ***If I'm not in PDF format, please open me in markdown formatting! (in vscode there is a button with a magnifying glass in the top right.)***
 
@@ -31,6 +34,7 @@ This report pertains to the INF161 project for the fall of 2023 for creating a m
 - Discussion
 - Improvements
 - Website
+- Real life implications
 - Conclusion
 
 ## Approach and design choices

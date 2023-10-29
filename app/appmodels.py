@@ -394,7 +394,7 @@ def trim_transform_outliers(df: pd.DataFrame, data2023: bool) -> pd.DataFrame:
         columns=["Relativ luftfuktighet"], errors="ignore"
     )
 
-    pkl_filename = "app/pickle_knn.pkl"
+    pkl_filename = "pickle_knn.pkl"
 
     try:
         with open(pkl_filename, "rb") as file:
@@ -566,7 +566,7 @@ def load_best_model() -> RandomForestRegressor:
 
     print("INFO : Starting parsing on loading best model ... ")
     # loop over files in local directory
-    directory = f"{str(PWD)}/app/raw_data"  # change
+    directory = f"{str(PWD)}/raw_data"  # change
 
     # multiple florida files will all be converted to df's, placed in this list, and concacted
     florida_df_list = []
@@ -644,7 +644,7 @@ def load_best_model() -> RandomForestRegressor:
     best_model.fit(X_train, y_train)
 
     # save model as pickle
-    pickle.dump(best_model, open("app/model.pkl", "wb"))
+    pickle.dump(best_model, open("model.pkl", "wb"))
 
     return best_model
 
