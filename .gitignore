@@ -30,3 +30,15 @@ src/utils/__pycache__
 .src/utils/__pycache__
 ./src/utils/__pycache__
 /src/utils/__pycache__
+
+.pickle_knn.pkl
+.model.pkl
+
+./pickle_knn.pkl
+./model.pkl
+
+/pickle_knn.pkl
+/model.pkl
+
+pickle_knn.pkl
+model.pkl
