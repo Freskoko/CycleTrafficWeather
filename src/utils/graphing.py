@@ -8,8 +8,7 @@ import seaborn as sns
 from scipy.stats import spearmanr
 
 # get current filepath to use when opening/saving files
-PWD = Path().absolute()
-FIGPWD = f"{PWD}/src"
+PWD = f"{Path().absolute()}/src"
 
 
 def graph_hour_variance(df: pd.DataFrame) -> None:

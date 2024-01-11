@@ -1,9 +1,9 @@
-# Report for INF161 cycle traffic project
+# Report for Cycle traffic project
 
 **To run the model**
  - Open the folder "Project_Final_Henrik" in vscode (dont just open the src file)
  - Add the "raw_data" folder into the src folder
- - Click on the src/INF161project.py file
+ - Click on the src/project.py file
  - Run the python file
  - (Running from terminal is not recommended, as paths may be wrong)
 
@@ -21,7 +21,7 @@
 
 *Henrik Brøgger*
 
-This report pertains to the INF161 project for the fall of 2023 for creating a model which can guess bike traffic across Nygårdsbroen.
+This report pertains to a project for creating a model which can guess bike traffic across Nygårdsbroen.
 
 ### Index:
 

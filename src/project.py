@@ -41,7 +41,7 @@ RANDOM_STATE = 2
 def main():
     print("INFO : Starting parsing ... ")
     # loop over files in local directory
-    directory = f"{str(PWD)}/raw_data"
+    directory = f"{str(PWD)}/src/raw_data"
 
     # multiple florida files will all be converted to df's, placed in this list, and concacted
     florida_df_list = []
@@ -156,7 +156,7 @@ def main():
     validation_df = dataframes_post["validation_df"]
 
     # save training data to csv to have a look
-    training_df.to_csv(f"{PWD}/out/main_training_data.csv")
+    training_df.to_csv(f"{PWD}/src/out/main_training_data.csv")
     print("INFO : Data saved to CSV")
 
     print("INFO : Description of data POST PROCESSING")

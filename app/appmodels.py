@@ -1,4 +1,3 @@
-import json
 import os
 import pickle
 from datetime import datetime
@@ -566,7 +565,7 @@ def load_best_model() -> RandomForestRegressor:
 
     print("INFO : Starting parsing on loading best model ... ")
     # loop over files in local directory
-    directory = f"{str(PWD)}/raw_data"  # change
+    directory = f"{str(PWD)}/src/raw_data"  # change
 
     # multiple florida files will all be converted to df's, placed in this list, and concacted
     florida_df_list = []

@@ -400,6 +400,6 @@ def treat_2023_file(df: pd.DataFrame, model: RandomForestRegressor) -> pd.DataFr
 
     new_df.reset_index()
 
-    new_df.to_csv(f"{PWD}/out/predictions.csv")
+    new_df.to_csv(f"{PWD}/src/out/predictions.csv")
 
     return df_final

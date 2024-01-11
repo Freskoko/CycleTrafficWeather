@@ -14,3 +14,19 @@ app/model.pkl
 app/pickle_knn.pkl
 .app/pickle_knn.pkl
 
+__pycache__
+app/__pycache__
+
+/__pycache__
+/app/__pycache__
+
+./__pycache__
+./app/__pycache__
+
+.app/__pycache__
+.app/__pycache__
+
+src/utils/__pycache__
+.src/utils/__pycache__
+./src/utils/__pycache__
+/src/utils/__pycache__
